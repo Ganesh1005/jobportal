@@ -1,6 +1,5 @@
 package com.example.jobportal.entity;
 
-
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -10,10 +9,10 @@ import java.util.List;
 public class JobSeekerProfile {
 
     @Id
-    private int userAccountId;
+    private Integer userAccountId;
 
     @OneToOne
-    @JoinColumn(name="user_account_id")
+    @JoinColumn(name = "user_account_id")
     @MapsId
     private Users userId;
 
@@ -25,21 +24,21 @@ public class JobSeekerProfile {
     private String workAuthorization;
     private String employmentType;
     private String resume;
-    @Column(nullable=true,length=64)
+
+    @Column(nullable = true, length = 64)
     private String profilePhoto;
 
-    @OneToMany(targetEntity = Skills.class,cascade = CascadeType.ALL,mappedBy = "jobSeekerProfile")
+    @OneToMany(targetEntity = Skills.class, cascade = CascadeType.ALL, mappedBy = "jobSeekerProfile")
     private List<Skills> skills;
 
-    public JobSeekerProfile(){
-
+    public JobSeekerProfile() {
     }
 
     public JobSeekerProfile(Users userId) {
         this.userId = userId;
     }
 
-    public JobSeekerProfile(int userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String workAuthorization,String employmentType, String resume, String profilePhoto, List<Skills> skills) {
+    public JobSeekerProfile(Integer userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String workAuthorization, String employmentType, String resume, String profilePhoto, List<Skills> skills) {
         this.userAccountId = userAccountId;
         this.userId = userId;
         this.firstName = firstName;
@@ -54,12 +53,11 @@ public class JobSeekerProfile {
         this.skills = skills;
     }
 
-
-    public int getUserAccountId() {
+    public Integer getUserAccountId() {
         return userAccountId;
     }
 
-    public void setUserAccountId(int userAccountId) {
+    public void setUserAccountId(Integer userAccountId) {
         this.userAccountId = userAccountId;
     }
 
@@ -103,14 +101,6 @@ public class JobSeekerProfile {
         this.state = state;
     }
 
-    public String getEmploymentType() {
-        return employmentType;
-    }
-
-    public void setEmploymentType(String employmentType) {
-        this.employmentType = employmentType;
-    }
-
     public String getCountry() {
         return country;
     }
@@ -125,6 +115,14 @@ public class JobSeekerProfile {
 
     public void setWorkAuthorization(String workAuthorization) {
         this.workAuthorization = workAuthorization;
+    }
+
+    public String getEmploymentType() {
+        return employmentType;
+    }
+
+    public void setEmploymentType(String employmentType) {
+        this.employmentType = employmentType;
     }
 
     public String getResume() {
@@ -143,18 +141,18 @@ public class JobSeekerProfile {
         this.profilePhoto = profilePhoto;
     }
 
-    // solution for
-    public String getPhotosImagePath(){
-        if(profilePhoto == null) return null;
-        return "/photos/candidate/"+userAccountId+"/"+profilePhoto;
-    }
-
     public List<Skills> getSkills() {
         return skills;
     }
 
     public void setSkills(List<Skills> skills) {
         this.skills = skills;
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (profilePhoto == null || userAccountId == null) return null;
+        return "/photos/candidate/" + userAccountId + "/" + profilePhoto;
     }
 
     @Override
@@ -171,7 +169,6 @@ public class JobSeekerProfile {
                 ", employmentType='" + employmentType + '\'' +
                 ", resume='" + resume + '\'' +
                 ", profilePhoto='" + profilePhoto + '\'' +
-                ", skills=" + skills +
                 '}';
     }
 }
