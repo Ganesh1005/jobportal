@@ -143,6 +143,12 @@ public class JobSeekerProfile {
         this.profilePhoto = profilePhoto;
     }
 
+    // solution for
+    public String getPhotosImagePath(){
+        if(profilePhoto == null) return null;
+        return "/photos/candidate/"+userAccountId+"/"+profilePhoto;
+    }
+
     public List<Skills> getSkills() {
         return skills;
     }
